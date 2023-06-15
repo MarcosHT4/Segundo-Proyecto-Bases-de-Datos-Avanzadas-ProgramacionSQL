@@ -1,0 +1,13 @@
+version: "3.5"
+services:
+  mysql_marcos:
+    image: mysql:debian
+    container_name: "mysql_marcos"
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456789
+
