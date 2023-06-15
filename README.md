@@ -1683,19 +1683,20 @@ Para esta consulta, se creó un índice para la tabla `proveedor`, específacame
 CREATE INDEX idx_proveedor_nombre ON proveedor(nombre);
 ```
 
-### Obtener toda la información relevante de todos los reportes de un tipo de reporte específico.
+### Obtener toda la información relevante de todos los reportes de un tipo de reporte específico dado cierto rango de fechas.
 
 ```sql
 SELECT titulo, contenido, fechaReporte, e.nombre as nombreEmpleado, e.apellidoPaterno as apellidoPaterno FROM reporte
 INNER JOIN tiporeporte t on reporte.idTipoReporte = t.idTipoReporte
 INNER JOIN empleado e on reporte.ciEmpleado = e.ciEmpleado
-WHERE t.tipo = 'Ventas';
+WHERE t.tipo = 'Ventas' and reporte.fechaReporte BETWEEN '2020-01-01' AND '2022-12-31';
 ```
 
-Para esta consulta, se creó un índice para la tabla `tiporeporte`, específacamente para el atributo `tipo`, ya que es el que se utiliza para filtrar los resultados.
+Para esta consulta, se creó un índice para la tabla `tiporeporte`, específacamente para el atributo `tipo`, ya que es el que se utiliza para filtrar los resultados, y otro para la tabla `reporte`, con el valor `fechaReporte`.
 
 ```sql
 CREATE INDEX idx_tipo_reporte ON tiporeporte(tipo);
+CREATE INDEX idx_reporte_fecha ON reporte(fechaReporte);
 ```
 
 ### Obtener los sembrados vivos por fecha, que albergan una cierta planta
